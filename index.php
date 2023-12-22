@@ -23,7 +23,7 @@
 					$("#result").removeClass("hidden");
 					$("#loading").addClass("hidden");
 					$("#copy").removeClass("hidden");
-					$("#result").text(data);
+					$("#result").text(data.replace(/\n\s*\n/g, "\n"));
 				});
 			}
 			
@@ -34,6 +34,18 @@
 			}
 		</script>
 		<style>
+			@keyframes spin {
+				0% {
+					transform: rotate(0deg);
+				}
+				50% {
+					transform: rotate(180deg);
+				}
+				100% {
+					transform: rotate(360deg);
+				}
+			}
+
 			body {
 				height: 100vh;
 				margin: 0;
@@ -71,9 +83,16 @@
 			}
 
 			#result {
+				padding: 0.5rem;
 				overflow-y: scroll;
 				flex-grow: 1;
 				background-color: #eee;
+			}
+			
+			#hourglass {
+				animation-name: spin;
+				animation-duration: 1.5s;
+				animation-iteration-count: infinite;
 			}
 		</style>
 	</head>
@@ -81,7 +100,7 @@
 		<input type="text" id="url" placeholder="Bandcamp album URL"></input>
 		<button onclick="fetch()">Fetch</button>
 		<div id="loading" class="hidden">
-			Fetching...this may take a while...
+			Fetching...this may take a while... <span id="hourglass">⏳</span>
 		</div>
 		<pre id="result" class="hidden">
 		</pre>
