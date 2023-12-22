@@ -19,6 +19,7 @@
 Album: <?php echo $title; ?>
 
 Date: <?php echo $release ?>
+
 Date Added: <?php echo date( "F d, Y" ); ?>
 
 # Album art URL: <?php echo $albumArt; ?>
