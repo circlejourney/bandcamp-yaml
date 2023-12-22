@@ -50,10 +50,10 @@ foreach($rows as $i => $row):
 ---
 Track: <?php echo $title; ?>
 
+Duration: '<?php echo $duration; ?>'
 URLs:
 - <?php echo $trackurl ?>
 
-Duration: '<?php echo $duration; ?>'
 <?php if(strlen($lyrics) > 0): ?>
 Lyrics: |-
 	<?php echo $lyrics ?>
