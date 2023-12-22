@@ -27,7 +27,7 @@ URLs:
 - <?php echo $url ?>
 
 Commentary: |-
-	<?php echo $commentary ?>
+    <?php echo $commentary ?>
 
 <?php
 foreach($rows as $i => $row): 
@@ -39,7 +39,7 @@ foreach($rows as $i => $row):
 		phpQuery::newDocumentHTML( file_get_contents($trackurl) );
 		$credits = preg_replace("/\n\s+/", "\n", pq(".tralbum-credits")->text());
 		$credits = preg_replace("/(^|\n)from\s[\S\s]*,\sreleased.*/", "", $credits);
-		$trackcommentary = preg_replace("/\n\s+\b/", "\n\t", pq(".tralbum-about")->text());
+		$trackcommentary = preg_replace("/\n\s+\b/", "\n    ", pq(".tralbum-about")->text());
 		$trackdata = [
 			"commentary" =>  trim( $trackcommentary ),
 			"track_art" => trim( pq(".popupImage img")->attr("src") ),
@@ -56,11 +56,12 @@ URLs:
 
 <?php if(strlen($lyrics) > 0): ?>
 Lyrics: |-
-	<?php echo $lyrics ?>
+    <?php echo $lyrics ?>
 
 <?php endif?><?php if(isset($trackdata) && strlen($trackdata["commentary"]) > 0): ?>
 Commentary: |-
-	<?php echo preg_replace("/\n\s+/", "\n\t", $trackdata["commentary"]) ?>
+    <i>[ARTIST NAME]:</i>
+    <?php echo preg_replace("/\n\s+/", "\n\t", $trackdata["commentary"]) ?>
 
 <?php endif;	if(isset($trackdata) && strlen($trackdata["track_art"]) > 0 && $trackdata["track_art"] !== $albumArt): ?>
 
