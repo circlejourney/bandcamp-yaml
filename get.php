@@ -8,7 +8,7 @@
     phpQuery::newDocumentHTML(file_get_contents($url));
 
     $title = trim( pq("#name-section .trackTitle")->text() );
-    $commentary = preg_replace("/\n\s*/", "\n\t", trim( pq(".tralbum-about")->text() ) );
+    $commentary = preg_replace("/\n\s*/", "\n    ", trim( pq(".tralbum-about")->text() ) );
     $albumArt = trim( pq(".popupImage img")->attr("src") );
     preg_match("/released\s(.*?)\n/", pq(".tralbum-credits")->text(), $releasematch);
     $release = trim( $releasematch[1] );
@@ -33,7 +33,7 @@ Commentary: |-
 foreach($rows as $i => $row): 
     $title = trim( pq($row)->find(".track-title")->text() );
     $duration = trim( pq($row)->find(".time")->text() );
-    $lyrics = trim( str_replace("\n", "\n\t", pq($row)->next(".lyricsRow")->text()) );
+    $lyrics = trim( str_replace("\n", "\n    ", pq($row)->next(".lyricsRow")->text()) );
     $trackurl = "https://" . $host . pq($row)->find(".title a")->attr("href");
 	if($trackpage = file_get_contents($trackurl)) {
 		phpQuery::newDocumentHTML( file_get_contents($trackurl) );
@@ -61,7 +61,7 @@ Lyrics: |-
 <?php endif?><?php if(isset($trackdata) && strlen($trackdata["commentary"]) > 0): ?>
 Commentary: |-
     <i>[ARTIST NAME]:</i>
-    <?php echo preg_replace("/\n\s+/", "\n\t", $trackdata["commentary"]) ?>
+    <?php echo preg_replace("/\n\s+/", "\n    ", $trackdata["commentary"]) ?>
 
 <?php endif;	if(isset($trackdata) && strlen($trackdata["track_art"]) > 0 && $trackdata["track_art"] !== $albumArt): ?>
 
