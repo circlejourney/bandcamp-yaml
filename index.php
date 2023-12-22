@@ -97,6 +97,7 @@
 		</style>
 	</head>
 	<body>
+		<div>Bandcamp YAML - Takes a Bandcamp album URL and generates a YAML file, for use with the <a href="https://github.com/hsmusic">HS Music Wiki</a> repo.</div>
 		<input type="text" id="url" placeholder="Bandcamp album URL"></input>
 		<button onclick="fetch()">Fetch</button>
 		<div id="loading" class="hidden">

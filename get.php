@@ -39,9 +39,9 @@ foreach($rows as $i => $row):
 		phpQuery::newDocumentHTML( file_get_contents($trackurl) );
 		$credits = preg_replace("/\n\s+/", "\n", pq(".tralbum-credits")->text());
 		$credits = preg_replace("/(^|\n)from\s[\S\s]*,\sreleased.*/", "", $credits);
-		$commentary = preg_replace("/\n\s+\b/", "\n\t", $commentary);
+		$trackcommentary = preg_replace("/\n\s+\b/", "\n\t", pq(".tralbum-about")->text());
 		$trackdata = [
-			"commentary" =>  trim( $commentary ),
+			"commentary" =>  trim( $trackcommentary ),
 			"track_art" => trim( pq(".popupImage img")->attr("src") ),
 			"credits" => trim( $credits )
 		];
