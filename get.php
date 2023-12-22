@@ -18,7 +18,7 @@
 ?>
 Album: <?php echo $title; ?>
 
-Date: <?php echo $release ?> 12:00:01
+Date: <?php echo $release ?>
 Date Added: <?php echo date( "F d, Y" ); ?>
 
 # Album art URL: <?php echo $albumArt; ?>
