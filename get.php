@@ -3,7 +3,9 @@
 	header("Content-Type: text/plain");
     require_once("phpQuery/phpQuery.php");
     
-    $url = $_GET["url"];
+    $url = $_POST["url"];
+    $track_artist = $_POST["track_artist"];
+
     $host = (parse_url($url))["host"];
     $raw = file_get_contents($url);
     phpQuery::newDocumentHTML($raw);
@@ -20,6 +22,19 @@
 ?>
 Album: <?php echo $metadata["name"] ?>
 
+<?php if($_POST["one_musician"] == "on"): ?>
+Artists:
+- <?php echo $metadata["byArtist"]["name"] ?>
+
+<?php endif ?><?php if($_POST["cover_artist"]): ?>
+Cover Artists:
+- <?php echo $_POST["cover_artist"]; ?>
+
+<?php endif ?><?php if($_POST["track_artist"]): ?>
+Default Track Cover Artists:
+- <?php echo $_POST["track_artist"]; ?>
+
+<?php endif ?>
 Date: <?php echo $release ?>
 
 Date Added: <?php echo date( "F d, Y" ) ?>
