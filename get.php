@@ -2,28 +2,29 @@
     error_reporting(0);
 	header("Content-Type: text/plain");
     require_once("phpQuery/phpQuery.php");
+    
     $url = $_GET["url"];
     $host = (parse_url($url))["host"];
     $raw = file_get_contents($url);
     phpQuery::newDocumentHTML($raw);
 
+    // Get page meta
     $metadata = json_decode(pq("[type='application/ld+json']")->text(), true);
 
+    // Parse meta
     $actual_url = $metadata["mainEntityOfPage"];
-    $title = $metadata["name"];
-    $commentary = $metadata["description"];
-    $album_art = $metadata["image"];
-    preg_match("/released\s(.*?)\n/", pq(".tralbum-credits")->text(), $releasematch);
-    $release = trim( $releasematch[1] );
+    $commentary = str_replace( "\n", "\n    ",
+        $metadata["description"]
+    );
     $release = date_format(new DateTime($metadata->datePublished), "F j, Y");
 ?>
-Album: <?php echo $title; ?>
+Album: <?php echo $metadata["name"] ?>
 
 Date: <?php echo $release ?>
 
-Date Added: <?php echo date( "F d, Y" ); ?>
+Date Added: <?php echo date( "F d, Y" ) ?>
 
-# Album art URL: <?php echo $album_art; ?>
+# Album art URL: <?php echo $metadata["image"] ?>
 
 URLs:
 - <?php echo $actual_url ?>
@@ -43,14 +44,12 @@ foreach($tracks as $i => $track_wrapper):
         ":" 
     );
 
-    $lyrics = str_replace(
-        "\n",
-        "\n    ",
+    $lyrics = str_replace( "\n", "\n    ",
         $track["recordingOf"]["lyrics"]["text"]
     );
-    $trackurl = $track["@id"];
 
-	if($trackpage = file_get_contents($trackurl)) {
+    // Fetch commentary, credits and art
+	if($trackpage = file_get_contents($track["@id"])) {
 		phpQuery::newDocumentHTML( $trackpage );
         $trackdata = json_decode(pq("[type='application/ld+json']")->text(), true);
         $trackdata["credits"] = $trackmeta["creditText"];
