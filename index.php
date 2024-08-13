@@ -23,7 +23,10 @@
 					$("#result").removeClass("hidden");
 					$("#loading").addClass("hidden");
 					$("#copy").removeClass("hidden");
-					$("#result").text(data.replace(/\n\s*\n/g, "\n"));
+					$("#result").text(
+						data
+						// data.replace(/\n\s*\n/g, "\n")
+					);
 				});
 			}
 			
