@@ -1,11 +1,12 @@
 <?php
+    error_reporting(0);
 	header("Content-Type: text/plain");
     require_once("phpQuery/phpQuery.php");
     $today = new DateTime();
     $url = $_GET["url"];
     $host = (parse_url($url))["host"];
-
-    phpQuery::newDocumentHTML(file_get_contents($url));
+    $raw = file_get_contents($url);
+    phpQuery::newDocumentHTML($raw);
 
     $title = trim( pq("#name-section .trackTitle")->text() );
     $commentary = preg_replace("/\n\s*/", "\n    ", trim( pq(".tralbum-about")->text() ) );
@@ -14,7 +15,6 @@
     $release = trim( $releasematch[1] );
     
     $rows = pq(".track_row_view");
-
 ?>
 Album: <?php echo $title; ?>
 
@@ -64,14 +64,13 @@ Commentary: |-
     <i>[ARTIST NAME]:</i>
     <?php echo preg_replace("/\n\s+/", "\n    ", $trackdata["commentary"]) ?>
 
-<?php endif;	if(isset($trackdata) && strlen($trackdata["track_art"]) > 0 && $trackdata["track_art"] !== $albumArt): ?>
+<?php endif; if(isset($trackdata) && strlen($trackdata["track_art"]) > 0 && $trackdata["track_art"] !== $albumArt): ?>
 
 # Track Art URL: <?php echo $trackdata["track_art"] ?>
 
-<?php endif;	if(isset($trackdata) && strlen($trackdata["credits"]) > 0): ?>
+<?php endif; if(isset($trackdata) && strlen($trackdata["credits"]) > 0): ?>
 
 # Credits:
 <?php echo preg_replace("/(^|\n)/", "$1# ", $trackdata["credits"]) ?>
 
-<?php endif?>
-<?php endforeach ?>
+<?php endif; endforeach; phpQuery::unloadDocuments(); ?>
