@@ -55,7 +55,7 @@ foreach($tracks as $i => $track_wrapper):
     
     // Format duration timestamp P??H??M??S
     $duration = trim(
-        preg_replace(["/[A-Z]/", "/^\:00\:/"], [":", ""], $track["duration"]),
+        preg_replace(["/[A-Z]/", "/^\:00\:0?/"], [":", ""], $track["duration"]),
         ":" 
     );
 
