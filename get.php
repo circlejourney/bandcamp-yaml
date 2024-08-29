@@ -45,6 +45,7 @@ URLs:
 - <?php echo $actual_url ?>
 
 Commentary: |-
+    <i>[NAME]:</i>
     <?php echo $commentary ?>
 
 <?php
@@ -85,7 +86,7 @@ Lyrics: |-
 
 <?php endif?><?php if(isset($trackdata) && strlen($trackdata["description"]) > 0): ?>
 Commentary: |-
-    <i>[ARTIST NAME]:</i>
+    <i>[NAME]:</i>
     <?php echo preg_replace("/\n\s+/", "\n    ", $trackdata["description"]) ?>
 
 <?php endif; if(isset($trackdata) && $trackdata["image"] && $trackdata["image"] !== $album_art): ?>
