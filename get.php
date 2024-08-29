@@ -14,11 +14,11 @@
     $metadata = json_decode(pq("[type='application/ld+json']")->text(), true);
 
     // Parse meta
-    $actual_url = $metadata["mainEntityOfPage"];
+    $actual_url = $metadata["@id"];
     $commentary = str_replace( "\n", "\n    ",
         $metadata["description"]
     );
-    $release = date_format(new DateTime($metadata->datePublished), "F j, Y");
+    $release = date("F j, Y", strtotime($metadata["datePublished"]));
 ?>
 Album: <?php echo $metadata["name"] ?>
 
