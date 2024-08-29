@@ -67,9 +67,9 @@ foreach($tracks as $i => $track_wrapper):
 	if($trackpage = file_get_contents($track["@id"])) {
 		phpQuery::newDocumentHTML( $trackpage );
         $trackdata = json_decode(pq("[type='application/ld+json']")->text(), true);
-        $trackdata["credits"] = $trackmeta["creditText"];
-        $trackdata["commentary"] = $trackmeta["description"];
-        $trackdata["track_art"] = $trackmeta["image"];
+        $trackdata["credits"] = $trackdata["creditText"];
+        $trackdata["commentary"] = $trackdata["description"];
+        $trackdata["track_art"] = $trackdata["image"];
 	}
 ?>
 ---
@@ -77,7 +77,7 @@ Track: <?php echo $title; ?>
 
 Duration: '<?php echo $duration; ?>'
 URLs:
-- <?php echo $trackurl ?>
+- <?php echo $track["@id"] ?>
 
 <?php if(strlen($lyrics) > 0): ?>
 Lyrics: |-
