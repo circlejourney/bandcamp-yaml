@@ -6,8 +6,12 @@
     $url = $_POST["url"];
     $track_artist = $_POST["track_artist"];
 
-    $host = (parse_url($url))["host"];
-    $raw = file_get_contents($url);
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    $raw = curl_exec($ch);
+    unset($ch);
+
     phpQuery::newDocumentHTML($raw);
 
     // Get page meta
@@ -65,7 +69,14 @@ foreach($tracks as $i => $track_wrapper):
     );
 
     // Fetch commentary, credits and art
-	if($trackpage = file_get_contents($track["@id"])) {
+    
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    $trackpage = curl_exec($ch);
+    unset($ch);
+
+	if($trackpage) {
 		phpQuery::newDocumentHTML( $trackpage );
         $trackdata = json_decode(pq("[type='application/ld+json']")->text(), true);
         $trackdata["credits"] = $trackdata["creditText"];
