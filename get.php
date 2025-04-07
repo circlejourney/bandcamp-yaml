@@ -57,6 +57,7 @@ $tracks = $metadata["track"]["itemListElement"];
 foreach($tracks as $i => $track_wrapper): 
     $track = $track_wrapper["item"];
     $title = $track["name"];
+    $trackurl = $track["@id"];
     
     // Format duration timestamp P??H??M??S
     $duration = trim(
@@ -70,7 +71,7 @@ foreach($tracks as $i => $track_wrapper):
 
     // Fetch commentary, credits and art
     
-    $ch = curl_init($url);
+    $ch = curl_init($trackurl);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
     $trackpage = curl_exec($ch);
@@ -95,10 +96,10 @@ URLs:
 Lyrics: |-
     <?php echo $lyrics ?>
 
-<?php endif?><?php if(isset($trackdata) && strlen($trackdata["description"]) > 0): ?>
+<?php endif?><?php if(isset($trackdata) && strlen($trackdata["commentary"]) > 0): ?>
 Commentary: |-
     <i>[NAME]:</i>
-    <?php echo preg_replace("/\n\s+/", "\n    ", $trackdata["description"]) ?>
+    <?php echo preg_replace("/\n\s+/", "\n    ", $trackdata["commentary"]) ?>
 
 <?php endif; if(isset($trackdata) && $trackdata["image"] && $trackdata["image"] !== $album_art): ?>
 
