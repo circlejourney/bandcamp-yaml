@@ -88,7 +88,7 @@ foreach($tracks as $i => $track_wrapper):
 ---
 Track: <?php echo $title; ?>
 
-Duration: '<?php echo $duration; ?>'
+Duration: <?php echo $duration; ?>
 URLs:
 - <?php echo $track["@id"] ?>
 
